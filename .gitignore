@@ -2,3 +2,16 @@ Library/
 .vsconfig
 Logs/
 Packages/
+.vs/SplineEditor/v16/.suo
+obj/
+Assets/Tree.prefab
+Assets/Tree.prefab.meta
+Assets/Tree_Textures.meta
+Assets/Tree_Textures/diffuse.png
+Assets/Tree_Textures/diffuse.png.meta
+Assets/Tree_Textures/normal_specular.png
+Assets/Tree_Textures/normal_specular.png.meta
+Assets/Tree_Textures/shadow.png
+Assets/Tree_Textures/shadow.png.meta
+Assets/Tree_Textures/translucency_gloss.png
+Assets/Tree_Textures/translucency_gloss.png.meta
