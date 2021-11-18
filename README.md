@@ -19,7 +19,7 @@
 
 ## Installation
 
-Il suffit de clone le projet via la commande : git clone ssh://git@git.isartintra.com:2424/2021/GP_2023_SplineEditor/GP3_NARDONE_W.git.
+Il suffit de clone le projet via la commande : git clone git@github.com:Korotsu/SplineEditor.git.
 puis de lancer le projet via le hub unity.
 
 ## Demo
