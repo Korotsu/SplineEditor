@@ -19,9 +19,7 @@
 
 ## Installation
 
-Il suffit de clone le projet via la commande : git clone git@github.com:Korotsu/SplineEditor.git.
-
-puis de lancer le projet via le hub unity.
+Il suffit de clone le projet puis de lancer le projet via le hub unity.
 
 ## Demo
 
