@@ -10,11 +10,8 @@ public class SplineManager : MonoBehaviour
 {
     [SerializeField] private GameObject ptsListParent;
     [SerializeField] private GameObject ptPrefab;
-    [SerializeField] private Dropdown   typeSelectorDropdown;
+    [SerializeField] private Dropdown typeSelectorDropdown;
     [SerializeField] private GameObject animatedObject;
-
-    //[SerializeField] private GameObject cam;
-    //[SerializeField] private float camSpeed;
 
     static public List<Transform> ptsList = new List<Transform>();
     private LineRenderer lineRenderer;
@@ -91,11 +88,6 @@ public class SplineManager : MonoBehaviour
             animPlaying = false;
             typeSelectorDropdown.enabled = true;
         }
-
-        /*if (Input.GetButton("Move"))
-        {
-            UpdateMovement();
-        }*/
     }
 
     void UpdateCurve()
@@ -133,12 +125,12 @@ public class SplineManager : MonoBehaviour
         {
             if (joncVect.magnitude > 0.001f)
             {
-                ptsList[1 + (i * 3)].position = ptsList[0 + (i * 3)].position + (ptsList[0 + (i * 3)].position - joncVect); 
+                ptsList[1 + (i * 3)].position = ptsList[0 + (i * 3)].position + (ptsList[0 + (i * 3)].position - joncVect);
             }
             float t = 0;
             while (t <= 1.0f)
             {
-                DelegateType S = t => (1 - 3*t + 3*t*t - t*t*t) * ptsList[0 + (i * 3)].position + 3 * t * (1 - 2*t + t*t) * ptsList[1 + (i * 3)].position + 3 * t * t * (1 - t) * ptsList[2 + (i * 3)].position + t * t * t * ptsList[3 + (i * 3)].position;
+                DelegateType S = t => (1 - 3 * t + 3 * t * t - t * t * t) * ptsList[0 + (i * 3)].position + 3 * t * (1 - 2 * t + t * t) * ptsList[1 + (i * 3)].position + 3 * t * t * (1 - t) * ptsList[2 + (i * 3)].position + t * t * t * ptsList[3 + (i * 3)].position;
                 curvePtsList.Add(S(t));
 
                 t += 0.001f;
@@ -263,7 +255,6 @@ public class SplineManager : MonoBehaviour
         while (j < tempControlPtsList.Count - shouldCloseTheBSpline && tempControlPtsList.Count >= 4)
         {
             float t = 0.0f;
-            int i = 0;
 
             while (t <= 1.0f)
             {
@@ -271,7 +262,6 @@ public class SplineManager : MonoBehaviour
                 curvePtsList.Add(S(t));
 
                 t += 0.001f;
-                i++;
             }
 
             Vector3 tempVec = tempControlPtsList[0];
@@ -321,14 +311,6 @@ public class SplineManager : MonoBehaviour
         UpdateCurve();
     }
 
-    /*private void UpdateMovement()
-    {
-        Vector3 movement = new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), Input.GetAxis("Forward"));
-        movement *= camSpeed;
-
-        //cam.transform.Translate()
-    }*/
-
     private bool UpdatePointsList()
     {
         foreach (Transform pt in ptsList)
@@ -341,16 +323,6 @@ public class SplineManager : MonoBehaviour
 
         return false;
     }
-
-    /*private void GetAllPts()
-    {
-        ptsList.Clear();
-
-        for (int i = 0; i < ptsListParent.transform.childCount; i++)
-        {
-            ptsList.Add(ptsListParent.transform.GetChild(i));
-        }
-    }*/
 
     private void LoadPts()
     {
@@ -380,7 +352,7 @@ public class SplineManager : MonoBehaviour
     public void ChangeAnimationSpeed(string newSpeed)
     {
         newSpeed = newSpeed.Replace('.', ',');
-        if(double.TryParse(newSpeed, out double newAnimSpeed))
+        if (double.TryParse(newSpeed, out double newAnimSpeed))
         {
             animationSpeed = System.Math.Round(newAnimSpeed, 3);
         }
@@ -394,15 +366,24 @@ public class SplineManager : MonoBehaviour
     public IEnumerator PlayAnimation()
     {
         GameObject animObject = Instantiate<GameObject>(animatedObject, this.transform);
-        int stepLenght  = (int)(animationSpeed / 0.001f);
-        int nbStep      = curvePtsList.Count / stepLenght;
+        int stepLenght = (int)(animationSpeed / 0.001f);
+        int nbStep = curvePtsList.Count / stepLenght;
 
         animPlaying = true;
         typeSelectorDropdown.enabled = false;
 
         for (int i = 0; i < nbStep; i++)
         {
-            animObject.transform.position = curvePtsList[stepLenght * i];
+            if (curvePtsList.Count > stepLenght * i)
+            {
+                animObject.transform.position = curvePtsList[stepLenght * i];
+            }
+
+            else
+            {
+                Destroy(animObject);
+            }
+
             if (curvePtsList.Count > stepLenght * (i + 1))
             {
                 animObject.transform.forward = curvePtsList[(stepLenght * (i + 1))] - animObject.transform.position;
